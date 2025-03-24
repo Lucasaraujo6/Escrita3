@@ -1,0 +1,44 @@
+\chapter{Revisão de Literatura}
+O problema da entrega de concreto ({\textit concrete delivery problem} - CDP) pode ser considerado uma variação do roteamento de veículos ou {\textit vehicle routing problem} (VRP). Suas principais diferenças são o fato do CDP ser multi-plantas e multi-viagem, onde cada veículo
+realiza apenas uma entrega  por viagem, retornando à planta de origem,
+o que implica que um mesmo cliente possa ser visitado várias vezes
+por veículos diferentes até o atendimento total da demanda.
+Em função da natureza do concreto pronto, janelas de tempo de entrega
+devem ser respeitadas para que não se inviabilizem uma obra da ICC.
+
+\textcolor{blue}{citar duas revisões recentes de VRP e MULTI TRIP VRP}
+
+Na revisão de literatura, é dada ênfase nos métodos de solução utilizados pelos autores e nas características das instâncias, a fim de ressaltar a novidade da solução apresentada no presente trabalho e a diferença de complexidade das instâncias comuns na literatura para com a aqui adotada.
+
+Foram analisados 13 trabalhos que atuam diretamente na solução do CDP, dos quais 11 fizeram o uso de dados provindos de aplicações reais, sem fornecer as instâncias para reprodução, e apenas \cite{tabref1}  e \cite{tabref9} deixam claro como os dados foram gerados. Além dos trabalhos que buscam resolver o problema, \cite{dados} disponibilizam conjunto de dados com 263 instâncias do CDP para acesso público, porém armazenam os dados com extensões lidas por softawres comerciais, o que dificulta o acesso. 
+
+Todos os artigos utilizados como referência fazem uso de um modelo, seja para validar os resultados das heurísticas, seja para resolver o problema no qual o modelo foi aplicado. Nota-se que, nas instâncias dos trabalhos nos quais não há a presença de heurísticas, há apenas uma planta, o que possibilita uma redução considerável da complexidade do problema e facilita sua resolução com resolvedores. 
+
+\cite{tabref1} apresentam um modelo de programação inteira que maximiza o valor ponderado dos pedidos atendidos e consideram um caso especial do problema que pode ser resolvido em tempo polinomial por um algoritmo de fluxo de custo mínimo. Eles adotam em seu artigo a frota homogênea com quantidade de veículos variando enre 2 e 4, quantidade de clientes variando entre 20 e 70 com demanda sendo de apenas uma viagem para cada e com testes para 2 e 3 plantas.  
+
+\cite{tabref2} desenvolvem um modelo baseado em fluxo de rede. Suas instâncias consideram frotas heterogêneas dão abertura para que durante a execução sejam determinadas a demanda, o tamanho da frota, a capacidade e outras informações. Dessa forma, o leitor não tem acesso a essas informações sobre o problema.
+
+\cite{tabref3} desenvolvem um modelo do problema e propõem uma abordagem meta-heu\-rís\-ti\-ca baseada em um algoritmo genético híbrido combinado com heurísticas construtivas. Tomando uma instância real como referência geram instâncias aleatórias com o mesmo tamanho de frota, com 49 veículos, clientes, com 71, e viagens distribuídas entre esses clientes, com 258, considerando apenas uma planta e frota homogênea.
+
+\cite{tabref4} desenvolvem um modelo e, para casos reais, um método de solução. Trabalham com instâncias com 4 ou 5 clientes, apenas uma planta, frota homogênea, viagens na faixa de 97 a 114 viagens por dia e um valor fixo de 45 veículos. 
+
+\cite{tabref5} formulam um modelo geral do problema e geram um modelo de fluxo de rede que origina o modelo de programaçao inteira mista. Posteriormente adotam uma busca local. Suas instâncias contam com seis grupos de frotas, nas quais as plantas variam entre 7 e 16 unidades, a quantidade de veículos  disponíveis assume valores enter 74 e 162, são considerados de 22 a 511 clientes com demanda média de 2449,82 m³ de concreto por cliente, resultando em instâncias com a quantidade de viagens por dia entre de 87 a 1071. 
+
+\cite{tabref6} criam um modelo e o utilizam junto à heurística VNS para resolver o problema de forma híbrida. Segundo os autores, as abordagens seguem um esquema de local branch. Os autores fazem o uso de dados de uma companhia real, companhia essa que conta com 31 veículos capazes de transportar concreto, uma quantidade de clientes que varia 13 a 76 por dia com uma média de 42,9 clientes por dia e uma demanda de concreto por cliente variando de 1 a 133 m³, com média de 514,39 m³ por dia. 
+
+\cite{tabref7} formulam as operações de despacho de caminhões de concreto (RMC) como um problema de job shop com recirculação, que inclui janelas de tempo e postergação de demanda para o dia seguinte em um modelo de programação multiobjetivo. Suas instâncias consideram 27 caminhões, de 10 a 12 clientes, apenas uma planta e um total de 66 a 156 viagens por dia.
+
+\cite{tabref8} desenvolvem um modelo de fluxo de rede e um método de solução que incorpora uma técnica de decomposição com o solver. O trabalho possui informações referentes à quantidade de veículos, de 80 a 160 unidades, e de plantas, com 4 unidades, porém deixa a faixa de demanda e a quantidade de clientes ser determinado pelo usuário e não apresenta os valores no trabalho.
+
+\cite{tabref9} reconhecem que a falta de dados de referência disponíveis publicamente inibem uma comparação mútua das abordagens do problema em enfoque. Suas abordagens incluem algoritmos exatos e heurísticos. Apresentam um Modelo de Programação Inteira Mista (MIP) e um modelo de Programação de Restrições. Fazem uso das heurísticas "Steepest Descent and best fit" e "Fix-and-optimize heuristic". O trabalho considera de 2 a 20 caminhões, de 10 a 50 clientes, de 1 a 4 plantas e de 2 a 15 viagens por cliente. Os dados das insTãncias são disponibilizados para reprodução do trabalho.
+
+\cite{tabref10} fazem o uso de um método baseado em fluxo de rede e utilizam um algoritmo genético para solução heurística. Em um trabalho posterior, \cite{tabref12} fazem uso de um modelo de rede de tempo-espaço, que combina produção de RMC e despacho de veículos e criam um algoritmo personalizado para resolução do problema. Ambos os trabalhos consideram uma instância com mesmas características, composta por 8 veículos, 7 clientes e uma única planta, com demanda total de 250m³. São os únicos trabalhos estudados que consideram o uso de caminhões bomba na solução desenvolvida. Os caminhões bomba são utilizados quando o caminhão betoneira não possui a bomba, responsável por fazer a planta do concreto no destino, integrada. O fato de contarem com apenas uma planta contribui para a concentração na programação da entrega de bombas e caminhões.
+
+
+\cite{tabref11} utilizam o modelo de outro autor e fazem uso de heurísticas de Algoritmo Genético Robusto e Algoritmo Genético Sequencial. Utilizam apenas quatro instâncias com dados reais. Não esclarecem a quantidade de caminhões e clientes, mas estabelecem 4 plantas com uma demanda total de 63 a 197 viagens por dia.
+
+
+Um dos trabalhos analisados de publicação mais recente é o de \cite{cantu}. Seu trabalho foi escolhido para ser a principal referência pela facilidade didática do modelo, pela quantidade de citações obtidas desde a sua publicação e por terem sido encontrados potenciais avanços frente aos métodos e resultados. O trabalho de \cite{cantu}, conta com instâncias com uma faixa de 25 a 150 clientes, 45 a 300 veículos e de 3 a 5 plantas. Assim como muitos dos que pautam esse artigo, não possui uma descrição completadas instâncias e não descreve informações como como faixa ou média de capacidade dos veículos, capacidade das plantas e, principalmente, quantidade de demanda média por cliente.
+
+Os trabalhos supracitados são os que foram identificados como de maiores alinhamentos metodológicos com o presente, por adotarem modelos matemáticos e métodos de aprimoramento da solução seja com heurísticas ou integração destes com modelos matemáticos. Para um melhor entendimento dos problemas correlatos ao CDP, sugerimos
+o leitor interessado o trabalho de \cite{tzanetos} que fazem uma revisão sistemática com uma maior gama de autores e metodologias, mapeando também soluções que se baseiam em simulações e aprendizado de máquina. 

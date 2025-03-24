@@ -1,0 +1,36 @@
+\chapter{Introdução}
+Como um indicador geral do desenvolvimento da sociedade, o Produto Interno Bruto (PIB)  provê informações que estão intimamente relacionadas ao bem-estar dos países \citep{gdpValidity}. A tendência internacional é que o PIB cresça ao longo dos anos \citep{oecd2024realgdp}. Como um dos setores que mais influenciam no PIB, a Indústria de Construção Civil (ICC) assume, em média, 13\% do PIB mundial \citep{mckinsey,fontereserva}.
+No mundo, o desempenho da ICC mantém, em geral, um alto nível de correlação com o consumo de cimento \citep{globbulk}. No Brasil, a participação da ICC no PIB nacional é de 3,2\% \citep{SNIC2022}. 
+
+Apesar de imensa e de grande relevância internacional, a indústria cimenteira lida com inúmeros desafios no que tange a velocidade de entrega, o atendimento de grandes demandas, a garantia de qualidade e o desperdício. Acompanhando a tendência de crescimento do PIB internacional, estes desafios também estão propensos a crescer e se tornar cada vez mais relevantes, principalmente quando considerados fatores como o esgotamento dos recursos naturais e a sustentabilidade, dado que a o consumo de cimento está também fortemente vinculado ao alto nível de consumo de água e a alta emissão de CO$_2$ \citep{Watts2019Concrete}.
+
+Minimizar o desperdício é essencial para mitigar os impactos sociais e ambientais advindos do consumo de cimento. O presente projeto se concentra no desenvolvimento de estratégias para aumentar a eficiência na ICC. Especificamente, aborda desafios relacionados com a entrega de concreto, um componente crítico em projetos de construção, descrito por \cite{tabref9}. Ao otimizar os processos de entrega de concreto, 
+% \st{pretendemos reduzir o desperdício de recursos e contribuir para um setor de construção mais consciente sobre seus impactos no mundo.}
+visamos ter um aumento no nível de serviço, redução
+da emissão de $CO_2$ e uma racionalização das operações logísticas
+de uma empresa cimenteira.
+
+% \textcolor{blue}{ ATENDE?Descreva o problema.... de forma geral. Comece pelas características do cimento pronto, a importância para a ICC, um contexto hipotético.}
+
+% O problema de entrega com caminhões betoneira é parte integrante da ICC e consiste em um conjunto de clientes com determinadas demandas por concreto pronto, a serem atendidas por um conjunto de plantas, respeitando limitações de recursos como quantidade de veículos disponíveis, capacidade de atendimento das plantas e janela de horário para recebimento. O uso de múltiplas plantas se dá pelo fato do concreto pronto ser perecível, a fim de diminuir o tempo de atendimento dos clientes. 
+O problema de entrega com caminhões betoneira é um componente essencial da ICC e envolve a distribuição de concreto pronto a um conjunto de clientes com demandas específicas. Esse atendimento é realizado por meio de múltiplas plantas produtoras, respeitando restrições de recursos, como a quantidade de veículos disponíveis, a capacidade de produção das plantas e as janelas de horário de recebimento dos clientes. O uso de diversas plantas justifica-se pela natureza perecível do concreto, visando a otimização do tempo de atendimento e a garantia de qualidade do produto entregue.
+
+
+O presente trabalho utiliza a pesquisa de \cite{cantu} como referência, com o intuito de fazer implementar sua formulação matemática do problema de roteamento periódico de veículos multi-plantas com datas de vencimento e janelas de tempo e sua pesquisa adaptativa aleatória gananciosa reativa. O uso é feito adotando  simplificações do problema, que serão discorridas nos capítulos seguintes. Posteriormente, serão analisados os limites inferiores do modelo matemático através das Relaxações Lagrangiana e Linear e também serão feitas análises comparativas aprimoramentos e novas abordagens para o encontro dos limites superiores através de heurísticas.
+
+
+
+% \textcolor{blue}{objetivos gerais e específicos, colocar o que foi feito e obtido até agora.}
+% 
+% Como objetivos específicos, pretendemos criar uma nova heurística que atinja em média resultados mais próximos da otimalidade com um menor tempo de execuçãeo.
+Como objetivos específicos, propomos a implementação de uma heurística multi-início para abordar o problema de entrega de concreto pronto. Espera-se que, em média, essa heurística forneça soluções próximas da otimalidade, com a qualidade dos resultados confirmada tanto por modelagem matemática e/ou pela análise de limites inferiores. A heurística proposta visa superar os métodos atualmente disponíveis na literatura, oferecendo melhores resultados em termos de qualidade das soluções e tempo de execução. Dessa forma, a abordagem proposta poderá contribuir para uma solução mais eficaz e de menor custo computacional, mantendo a acurácia necessária para aplicações práticas.
+% Como objetivos gerais, pretendemos abordar métodos para encontrar limites superiores e inferiores com os intuitos de ser didático, explorar possibilidades e, naturalmente, validar os resultados encontrados.
+
+Como objetivos gerais, buscamos desenvolver métodos para determinação de limites superiores e inferiores das soluções, com o intuito de aprofundar o entendimento teórico do problema e fornecer uma abordagem didática e acessível. Para os limites superiores, propomos o uso da heurística gananciosa, do Procedimento de Busca Adaptativa Gulosa, Randômica e Reativa ({\textit Reactive GRASP - RGRASP}) e da heurística multi-início. Para os limites inferiores, utilizaremos relaxações linear e lagrangiana, além de um dual natural do problema. Com essa combinação de métodos, esperamos validar rigorosamente os resultados, garantindo que estejam bem fundamentados e possam contribuir de maneira significativa para o avanço do conhecimento na área.
+
+\textcolor{blue}{ quais a suas contribuições}
+
+% \textcolor{blue}{ colocar comoe o trabalho está organizado.}
+
+O presente trabalho está organizada em sete capítulos. A Introdução apresenta o problema, os objetivos e a estrutura do trabalho. Em Revisão de Literatura, exploramos estudos e metodologias relacionadas, situando o trabalho no contexto acadêmico. O capítulo de Notações, Definição e Formulação formaliza o problema matematicamente e introduz as notações utilizadas. No capítulo de Instâncias, descrevemos os dados e justificamos a escolha dos cenários para validação. Em Metodologias de Resolução, detalhamos a Relaxação Lagrangiana e a heurística Multi-Start, abordagens empregadas para otimizar a solução. No capítulo de Resultados, apresentamos e analisamos os resultados obtidos com os métodos propostos, e, por fim, em Conclusão, sintetizamos as contribuições e sugerimos direções para estudos futuros.
+
