@@ -1,0 +1,139 @@
+\chapter{Notações, definição e formulação}
+\label{sec:model}
+
+
+
+O problema de roteamento de caminhões betoneira consiste em atender um conjunto de clientes que precisam receber uma quantidade específica de concreto em suas instalações. O transporte é realizado por caminhões com capacidade definida, respeitando janelas de tempo para início e término do descarregamento. Todas as entregas devem ocorrer dentro de um horizonte de planejamento.  
+
+O concreto é fornecido por um conjunto de plantas, que podem ter capacidade de produção limitada ou não. A frota pode ser homogênea ou heterogênea, e a alocação inicial dos caminhões varia conforme a abordagem adotada: eles podem iniciar e encerrar o dia em um estacionamento central, partir e retornar ao estacionamento ao fim do dia, ou podem ser distribuídos dinamicamente, de forma que o modelo determina onde o veículo iniciará, ignorando o tempo de alocação dos veículos as plantas.
+
+Durante o período de execução, os veículos podem ficar atrelados de maneira fixa às plantas, ou podem ser redistribuídos entre as plantas durante o período de operação, conforme necessário.  
+
+Cada caminhão atende apenas um cliente por viagem e pode realizar múltiplas viagens ao longo do dia, respeitando sua capacidade de carga e os tempos de deslocamento entre plantas e canteiros de obras.  Um cliente pode receber mais de uma viagem.
+
+O problema abordado nesta dissertação é uma variação do problema de entrega de concreto, já demonstrado como NP-completo por \cite{kinable}. Como a formulação presente no artigo presente mantém as mesmas características estruturais e instâncias do problema de \cite{kinable}, ele continua pertencendo à classe de problemas NP-completos.
+
+A seguir temos a descrição de todas as variáveis e parâmetros utilizados no modelo, seguidos pelo modelo. 
+
+
+\begin{table}[ht!]
+  \centering
+  \begin{tabular}{cl}
+  \toprule
+  \textbf{Parâmetro} & \textbf{Descrição} \\
+  \hline
+  I & Conjunto de plantas, $I=\{1,\ldots,n_i\}$\\
+  J & Conjunto de clientes, $J = \{1,\ldots,n_j\}$ \\
+  K & Conjunto de veículos disponíveis, $K=\{1,\ldots,n_k\}$\\
+  $L_j$ & Conjunto de viagens possíveis para o cliente j, $L_j=\{1,\ldots,n_{Lj}\}$\\
+  $c_{ij}$ & custo do atendimento do cliente $j\in J$ pela planta $i\in I$ \\
+  % q & capacidade dos caminhões \\
+  $q$ & capacidade e tempo que os veículos levam para descarregar \\
+  $d_{j}$ & demanda total do cliente j \\
+  $t_{ij}$ & tempo que qualquer caminhão demora para ir da planta i ao cliente j \\
+  $t_{ji}$ & tempo que qualquer caminhão demora para ir do cliente j à planta i \\
+  $a_{j}$ & início da janela de entrega do cliente j \\
+  $b_{j}$ & fim da janela de entrega do cliente j\\
+  $T$ & horizonte de tempo de um dia de trabalho \\
+  \hline
+  \end{tabular}
+  \caption{Lista de Parâmetros}
+  \label{tab:parametros}
+\end{table}
+
+
+\begin{table}[ht!]
+  \centering
+  \begin{tabular}{p{3cm}p{10cm}}
+  \toprule
+  \textbf{Variáveis} & \multicolumn{1}{c}{\textbf{Descrição}} \\
+  \midrule
+  $x_{ijlr}\in \{0,1\}$ & variável binária que, quando ativa, indica que o veículo $k \in K$, em sua l-é\-si\-ma via\-gem $l\in L_k$, sai
+  da planta $i\in I$ para o cliente $j\in J$ \\
+  u$_{ik}$ & variável binária que, quando ativa, indica que o veículo k está atribuído à planta i \\
+  s$_{kl}\geq 0$ & momento de início da l-ésima viagem do veículo k \\
+  \bottomrule
+  \end{tabular}
+  \caption{Lista de Variáveis}
+  \label{tab:variables}
+\end{table}
+
+
+\subsection*{Índices e Conjuntos}
+\begin{itemize}
+    \item \( i \in I \) : Usinas (plantas)
+    \item \( j \in J \) : Clientes
+    \item \( l \in L_j \) : Viagens do cliente \( j \)
+    \item \( r \in T \) : Instantes de tempo discretizados
+\end{itemize}
+
+\subsection*{Variáveis de Decisão}
+\begin{align*}
+    x_{i,j,l,r} & \in \{0,1\}, & \text{1 se um caminhão atende a viagem } l \text{ do cliente } j \\ 
+                &  & \text{ da planta } i \text{ terminando no tempo } r, \text{ 0 caso contrário} \\
+    y_{i,j,l,r} & \in \{0,1\}, & \text{1 se um caminhão retorna da viagem } l \text{ do cliente } j \\ 
+                &  & \text{ da planta } i \text{ no tempo } r, \text{ 0 caso contrário} \\
+    z_i & \in \mathbb{Z}_+, & \text{Número de caminhões que iniciam na planta } i
+\end{align*}
+
+
+\subsection*{Função Objetivo}
+\begin{equation}
+    \max \sum_{i,j,l,r} x_{i,j,l,r} \cdot d_{j,l}
+\end{equation}
+
+\subsection*{Restrições}
+
+\textbf{Cada viagem do cliente é atendida no máximo uma vez:}
+\begin{equation}
+    \sum_{i,r} x_{i,j,l,r} \leq 1, \quad \forall j \in J, \forall l \in L_j
+\end{equation}
+
+\textbf{Restrições de intervalo de tempo entre viagens:}
+\begin{equation}
+    \sum_{i,r} r x_{i,j,l+1,r} - \sum_{i,r} (r + T_{unload}) x_{i,j,l,r} \geq 0, \quad \forall j \in J, \forall l \in L_j
+\end{equation}
+\begin{equation}
+    \sum_{i,r} r x_{i,j,l+1,r} - \sum_{i,r} (r + T_{unload}) x_{i,j,l,r} \leq 5, \quad \forall j \in J, \forall l \in L_j
+\end{equation}
+
+\textbf{A execução das viagens deve ser sequencial:}
+\begin{equation}
+    \sum_{i,r} x_{i,j,l+1,r} = \sum_{i,r} x_{i,j,l,r}, \quad \forall j \in J, \forall l \in L_j
+\end{equation}
+
+\textbf{As viagens devem terminar dentro do horizonte de tempo:}
+\begin{equation}
+    \sum_{i,r} (r + t_{i,j} + T_{unload} + d_{i}) y_{i,j,l,r} \leq T, \quad \forall j \in J, \forall l \in L_j
+\end{equation}
+
+\textbf{Janela de tempo de descarregamento:}
+\begin{equation}
+    \sum_{i,r} (b_j - r - T_{unload}) x_{i,j,l,r} \geq 0, \quad \forall j \in J, \forall l \in L_j
+\end{equation}
+\begin{equation}
+    \sum_{i,r} (r - a_j) x_{i,j,l,r} \geq 0, \quad \forall j \in J, \forall l \in L_j
+\end{equation}
+
+\textbf{Limitação da frota disponível:}
+\begin{equation}
+  \sum_{i,j,l,r \mid r \geq rr \geq r - t_{i,j}} x_{i,j,l,r} +
+  \sum_{i,j,l,r \mid r < rr \leq r + t_{i,j} + T_{unload}} y_{i,j,l,r} 
+  \leq K, \quad \forall rr \in T
+\end{equation}
+
+\textbf{Viagem de ida e volta devem ser consistentes:}
+\begin{equation}
+    \sum_{i,r} r x_{i,j,l,r} = \sum_{i,r} r y_{i,j,l,r}, \quad \forall j \in J, \forall l \in L_j
+\end{equation}
+
+\textbf{Disponibilidade inicial dos veículos nas plantas:}
+\begin{equation}
+  \sum_{j,l,r \mid r + t_{i,j} + T_{unload} \leq rr} y_{i,j,l,r} + z_i -
+  \sum_{j,l,r \mid r - t_{i,j} < rr} x_{i,j,l,r} \geq 0, \quad \forall i \in I, \forall rr \in T
+\end{equation}
+
+\textbf{Limite da frota total:}
+\begin{equation}
+    \sum_{i} z_i \leq K
+\end{equation}
