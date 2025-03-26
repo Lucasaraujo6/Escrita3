@@ -3,18 +3,53 @@
 
 
 
-O problema de roteamento de caminhões betoneira consiste em atender um conjunto de clientes que precisam receber uma quantidade específica de concreto em suas instalações. O transporte é realizado por caminhões com capacidade definida, respeitando janelas de tempo para início e término do descarregamento. Todas as entregas devem ocorrer dentro de um horizonte de planejamento.  
+\section{Introdu\c{c}\~{a}o ao Problema}
 
-O concreto é fornecido por um conjunto de plantas, que podem ter capacidade de produção limitada ou não. A frota pode ser homogênea ou heterogênea, e a alocação inicial dos caminhões varia conforme a abordagem adotada: eles podem iniciar e encerrar o dia em um estacionamento central, partir e retornar ao estacionamento ao fim do dia, ou podem ser distribuídos dinamicamente, de forma que o modelo determina onde o veículo iniciará, ignorando o tempo de alocação dos veículos as plantas.
+O problema de roteamento de caminh\~{o}es betoneira consiste em atender um conjunto de clientes que precisam receber uma quantidade espec\'{i}fica de concreto em suas instala\c{c}\~{o}es. O transporte \'{e} realizado por caminh\~{o}es com capacidade definida, respeitando janelas de tempo para in\'{i}cio e t\'{e}rmino do descarregamento. Todas as entregas devem ocorrer dentro de um horizonte de planejamento.
 
-Durante o período de execução, os veículos podem ficar atrelados de maneira fixa às plantas, ou podem ser redistribuídos entre as plantas durante o período de operação, conforme necessário.  
+O concreto \'{e} fornecido por um conjunto de plantas, que podem ter capacidades de produ\c{c}\~{a}o limitadas ou n\~{a}o. A frota pode ser homog\^{e}nea ou heterog\^{e}nea, e a aloca\c{c}\~{a}o inicial dos caminh\~{o}es varia conforme a abordagem adotada: eles podem iniciar e encerrar o dia em um estacionamento central, partir e retornar ao estacionamento ao fim do dia, ou podem ser distribu\'{i}dos dinamicamente, de forma que o modelo determina onde o ve\'{i}culo iniciar\'{a}, ignorando o tempo de aloca\c{c}\~{a}o dos ve\'{i}culos \`{a}s plantas.
 
-Cada caminhão atende apenas um cliente por viagem e pode realizar múltiplas viagens ao longo do dia, respeitando sua capacidade de carga e os tempos de deslocamento entre plantas e canteiros de obras.  Um cliente pode receber mais de uma viagem.
+Durante a execu\c{c}\~{a}o, os ve\'{i}culos podem operar sob diferentes pol\'{i}ticas de redistribui\c{c}\~{a}o: eles podem permanecer atrelados a uma \'{u}nica planta durante todo o per\'{i}odo ou serem redistribu\'{i}dos entre plantas conforme necess\'{a}rio. Cada caminh\~{a}o atende apenas um cliente por viagem e pode realizar m\'{u}ltiplas viagens ao longo do dia, respeitando sua capacidade de carga e os tempos de deslocamento entre plantas e clientes. Um cliente pode receber m\'{u}ltiplas viagens.
 
-O problema abordado nesta dissertação é uma variação do problema de entrega de concreto, já demonstrado como NP-completo por \cite{kinable}. Como a formulação presente no artigo presente mantém as mesmas características estruturais e instâncias do problema de \cite{kinable}, ele continua pertencendo à classe de problemas NP-completos.
+\section*{Caracteriza\c{c}\~{a}o do Problema}
 
-A seguir temos a descrição de todas as variáveis e parâmetros utilizados no modelo, seguidos pelo modelo. 
+Dada uma inst\^{a}ncia contendo $I$ plantas, $J$ clientes com janelas de tempo $[a_j, b_j]$, tempos de deslocamento $t_{ij}$, demandas $d_j$, e uma frota de $K$ ve\'{i}culos, existe uma aloca\c{c}\~{a}o de caminh\~{o}es que satisfa\c{c}a todas as restri\c{c}\~{o}es operacionais e atenda a todas as demandas?
 
+Para melhor compreender as complexidades envolvidas nesse problema, analisamos sua rela\c{c}\~{a}o com o problema do caixeiro viajante com desigualdade triangular respeitada ($\Delta$-TSP). Em \cite{asbach}, encontra-se a demonstra\c{c}\~{a}o de que o problema de roteamento de caminh\~{o}es betoneira \'{e} NP-completo. A seguir, apresentamos a adapta\c{c}\~{a}o dessa prova.
+
+\section*{Prova de NP-completude}
+
+Para demonstrar que o problema de entrega de concreto \'{e} NP-completo, provamos que ele pertence \`{a} classe NP e mostramos que existe uma redu\c{c}\~{a}o polinomial da vers\~{a}o de decis\~{a}o do $\Delta$-TSP para o problema de roteamento de caminh\~{o}es betoneira.
+
+\subsection*{Passo 1: O problema pertence a NP}
+
+\'{E} evidente que o problema de roteamento de caminh\~{o}es betoneira pertence \`{a} classe NP, pois, dada uma solu\c{c}\~{a}o candidata, podemos verificar em tempo polinomial se todas as restri\c{c}\~{o}es s\~{a}o satisfeitas.
+
+\subsection*{Passo 2: Redu\c{c}\~{a}o a partir do $\Delta$-TSP}
+
+Considere uma inst\^{a}ncia $P$ do $\Delta$-TSP com $n$ cidades e uma fun\c{c}\~{a}o de custo de viagem $z_{TSP}: \{1, \dots, n\} \times \{1, \dots, n\} \to \mathbb{Z}$. Na vers\~{a}o de decis\~{a}o do $\Delta$-TSP, seja $B$ uma constante e a pergunta do problema de decis\~{a}o \'{e}: "Existe um percurso que passe exatamente uma vez por cada cidade, com custo total menor ou igual a $B$?"
+
+Agora, transformamos esta inst\^{a}ncia $(n, z_{TSP}, B)$ em tempo polinomial em uma inst\^{a}ncia $P'$ do problema de entrega de concreto, conforme segue:
+
+\begin{itemize}
+    \item Definimos um conjunto de clientes $C := \{C_1, \dots, C_n\}$, onde cada cliente tem demanda 1, correspondendo \`{a}s cidades do TSP.
+    \item O conjunto de centrais de concreto \'{e} definido como $D := \{D_1, \dots, D_n\}$.
+    \item Cada central pode atender a qualquer cliente, ou seja, $D(c) := D$ para todo $c \in C$.
+    \item H\'{a} apenas um ve\'{i}culo $K_1$ com capacidade $q(K_1) := 1$, ou seja, $K := \{K_1\}$.
+    \item Os custos de viagem s\~{a}o definidos conforme $z_{TSP}$, garantindo a equival\^{e}ncia entre os problemas.
+\end{itemize}
+
+Se existir um percurso na inst\^{a}ncia $P$ do $\Delta$-TSP com custo menor ou igual a $B$, ent\~{a}o existe uma solu\c{c}\~{a}o para a inst\^{a}ncia transformada $P'$ do problema de entrega de concreto com custo menor ou igual a $B$, e vice-versa. Como a redu\c{c}\~{a}o pode ser feita em tempo polinomial, isso prova que o problema de entrega de concreto \'{e} fortemente NP-completo. \hfill $\square$
+
+\section*{Modelo Comparativo}
+
+A seguir, apresentamos um modelo matem\'{a}tico de benchmark extra\'{i}do da literatura para compara\c{c}\~{a}o com o modelo proposto neste trabalho. Este modelo cl\'{a}ssico considera [descrever as principais caracter\'{i}sticas] e ser\'{a} utilizado para avaliar os ganhos proporcionados pela abordagem proposta.
+
+% Inserir modelo de benchmark aqui
+
+\section*{Formula\c{c}\~{a}o do Modelo Proposto}
+
+Com base na estrutura do problema e nas restri\c{c}\~{o}es descritas, propomos o seguinte modelo matem\'{a}tico:
 
 \begin{table}[ht!]
   \centering
@@ -42,39 +77,56 @@ A seguir temos a descrição de todas as variáveis e parâmetros utilizados no 
 \end{table}
 
 
+% \begin{table}[ht!]
+%   \centering
+%   \begin{tabular}{p{3cm}p{10cm}}
+%   \toprule
+%   \textbf{Variáveis} & \multicolumn{1}{c}{\textbf{Descrição}} \\
+%   \midrule
+%   $x_{ijlr}\in \{0,1\}$ & variável binária que, quando ativa, indica que o veículo $k \in K$, em sua l-é\-si\-ma via\-gem $l\in L_k$, sai
+%   da planta $i\in I$ para o cliente $j\in J$ \\
+%   u$_{ik}$ & variável binária que, quando ativa, indica que o veículo k está atribuído à planta i \\
+%   s$_{kl}\geq 0$ & momento de início da l-ésima viagem do veículo k \\
+%   \bottomrule
+%   \end{tabular}
+%   \caption{Lista de Variáveis}
+%   \label{tab:variables}
+% \end{table}
+
 \begin{table}[ht!]
-  \centering
-  \begin{tabular}{p{3cm}p{10cm}}
-  \toprule
-  \textbf{Variáveis} & \multicolumn{1}{c}{\textbf{Descrição}} \\
-  \midrule
-  $x_{ijlr}\in \{0,1\}$ & variável binária que, quando ativa, indica que o veículo $k \in K$, em sua l-é\-si\-ma via\-gem $l\in L_k$, sai
-  da planta $i\in I$ para o cliente $j\in J$ \\
-  u$_{ik}$ & variável binária que, quando ativa, indica que o veículo k está atribuído à planta i \\
-  s$_{kl}\geq 0$ & momento de início da l-ésima viagem do veículo k \\
-  \bottomrule
-  \end{tabular}
-  \caption{Lista de Variáveis}
-  \label{tab:variables}
-\end{table}
+    \centering
+    \begin{tabular}{p{3cm}p{10cm}}
+    \toprule
+    \textbf{Variáveis} & \multicolumn{1}{c}{\textbf{Descrição}} \\
+    \midrule
+    $x_{i,j,l,r} \in \{0,1\}$ & Variável binária que assume valor 1 se um caminhão atende a viagem $l$ do cliente $j$ \\
+    & a partir da planta $i$, terminando no tempo $r$, e 0 caso contrário. \\
+    $y_{i,j,l,r} \in \{0,1\}$ & Variável binária que assume valor 1 se um caminhão retorna da viagem $l$ do cliente $j$ \\
+    & para a planta $i$ no tempo $r$, e 0 caso contrário. \\
+    $z_i \in \mathbb{Z}_+$ & Número de caminhões que iniciam na planta $i$. \\
+    \bottomrule
+    \end{tabular}
+    \caption{Lista de Variáveis de Decisão}
+    \label{tab:variables_decisao}
+  \end{table}
+  
 
+% \subsection*{Índices e Conjuntos}
+% \begin{itemize}
+%     \item \( i \in I \) : Usinas (plantas)
+%     \item \( j \in J \) : Clientes
+%     \item \( l \in L_j \) : Viagens do cliente \( j \)
+%     \item \( r \in T \) : Instantes de tempo discretizados
+% \end{itemize}
 
-\subsection*{Índices e Conjuntos}
-\begin{itemize}
-    \item \( i \in I \) : Usinas (plantas)
-    \item \( j \in J \) : Clientes
-    \item \( l \in L_j \) : Viagens do cliente \( j \)
-    \item \( r \in T \) : Instantes de tempo discretizados
-\end{itemize}
-
-\subsection*{Variáveis de Decisão}
-\begin{align*}
-    x_{i,j,l,r} & \in \{0,1\}, & \text{1 se um caminhão atende a viagem } l \text{ do cliente } j \\ 
-                &  & \text{ da planta } i \text{ terminando no tempo } r, \text{ 0 caso contrário} \\
-    y_{i,j,l,r} & \in \{0,1\}, & \text{1 se um caminhão retorna da viagem } l \text{ do cliente } j \\ 
-                &  & \text{ da planta } i \text{ no tempo } r, \text{ 0 caso contrário} \\
-    z_i & \in \mathbb{Z}_+, & \text{Número de caminhões que iniciam na planta } i
-\end{align*}
+% \subsection*{Variáveis de Decisão}
+% \begin{align*}
+%     x_{i,j,l,r} & \in \{0,1\}, & \text{1 se um caminhão atende a viagem } l \text{ do cliente } j \\ 
+%                 &  & \text{ da planta } i \text{ terminando no tempo } r, \text{ 0 caso contrário} \\
+%     y_{i,j,l,r} & \in \{0,1\}, & \text{1 se um caminhão retorna da viagem } l \text{ do cliente } j \\ 
+%                 &  & \text{ da planta } i \text{ no tempo } r, \text{ 0 caso contrário} \\
+%     z_i & \in \mathbb{Z}_+, & \text{Número de caminhões que iniciam na planta } i
+% \end{align*}
 
 
 \subsection*{Função Objetivo}

@@ -87,34 +87,13 @@ O comando ```\chapter{}``` define o início de um novo apêndice.
 [MIT](https://choosealicense.com/licenses/mit)
 
 settings.json:
-{
-    "latex-workshop.latex.recipes": [
-        {
-            "name": "pdflatex -> bibtex -> pdflatex * 2",
-            "tools": [
-                "pdflatex",
-                "del_temp"
-            ]
-        }
-    ],
-    "latex-workshop.latex.tools": [
-        {
-            "name": "pdflatex",
-            "command": "pdflatex",
-            "args": [
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-output-directory=C:/Users/Lucas/Documents/Tese/Escrita3/ppgccufmg-main",
-                "%DOC%"
-            ]
-        },
-        {
-            "name": "del_temp",
-            "command": "cmd",
-            "args": [
-                "/c",
-                "C:\\Users\\Lucas\\Documents\\Tese\\Escrita3\\config\\del_temp.bat"
-            ]
-        }
-    ]
+{    
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "[latex]": {
+        "editor.wordWrap": "on"
+    },
+    
+    "latex-workshop.latex.autoClean.run":"onSucceeded",
+    "explorer.confirmDelete": false,
 }
