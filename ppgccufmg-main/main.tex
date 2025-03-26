@@ -14,7 +14,8 @@
 \pretocmd{\command}{<before>}{}{}
 \apptocmd{\command}{<after>}{}{}
 
-\usepackage[brazil]{babel} %% se o documento for em português, OU
+\usepackage[brazil]{babel}
+ %% se o documento for em português, OU
 \usepackage{hyphenat}
 
 % \usepackage[english]{babel} %% se o documento for em inglês
@@ -96,6 +97,10 @@
 	\input{06_revisao_de_literatura.tex} 
 	\input{07_formulacao.tex} 
 	\input{08_experimentos.tex} 
+	\renewcommand\bibname{Referências} %% Trabalhos em português
+	% \renewcommand\bibname{References} %% Trabalhos em inglês
+	\bibliographystyle{plain}
+	\bibliography{referencias}
 	% \chapter{Introdução}
 	% Exemplo de nota de rodapé \footnote{Aqui está uma nota de rodapé e uma url: \url{https://dcc.ufmg.br}}.
 		
@@ -166,10 +171,6 @@
 		% 	Citações aleatórias para fazer com que as referências bibliográficas ocupem	mais de uma página: \cite{bichsel92simple, dror01statistics, guisser92new, dwork2006calibrating, sweeney2002k}.
 			
 		%% Referências
-		\renewcommand\bibname{Referências} %% Trabalhos em português
-		% \renewcommand\bibname{References} %% Trabalhos em inglês
-		\bibliographystyle{plain}
-		\bibliography{referencias}
 		
 		% \begin{apendices}
 		% 	\chapter{Um apêndice}
